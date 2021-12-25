@@ -23,7 +23,7 @@ jobs:
       - name: Lint module
         run: npm run lint
       - name: Test module
-        run: npm run test
+        run: npm run test-nyc
       - name: Configure coveralls
         run: 'echo "repo_token: $COVERALLS_REPO_TOKEN" > .coveralls.yml'
         shell: bash
