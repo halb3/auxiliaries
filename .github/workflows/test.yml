@@ -1,0 +1,37 @@
+name: build, test, and report coverage
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build, Test, and Report Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initialize Node.js environment
+        uses: actions/setup-node@v2
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: module
+      - name: Set up dependencies
+        run: npm install
+        working-directory: module
+      - name: Build module
+        run: npm run build
+        working-directory: module
+      - name: Lint module
+        run: npm run lint
+        working-directory: module
+      - name: Test module
+        run: npm run test
+        working-directory: module
+      - name: Configure coveralls
+        run: echo "repo_token: ${{ secrets.COVERALLS_REPO_TOKEN }}" > .coveralls.yml
+        working-directory: module
+      - name: Report coveralls
+        run: npm run coveralls
+        working-directory: module
