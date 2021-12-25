@@ -2,15 +2,17 @@
 import { resolve } from 'path';
 import git from 'git-rev-sync';
 
-import { defineConfig, UserConfigExport, LibraryOptions } from 'vite';
+import { defineConfig, UserConfigExport } from 'vite';
 
 const root = resolve(__dirname, 'source');
 const outDir = resolve(__dirname, 'dist');
 
 
-export default defineConfig(({ command, mode }) => {
+/*eslint no-unused-vars: ["error", {"args": "after-used"}]*/
 
-    let config: UserConfigExport = {
+export default defineConfig(({ mode }) => {
+
+    const config: UserConfigExport = {
         root,
         build: {
             outDir,
