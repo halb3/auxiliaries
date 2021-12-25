@@ -52,10 +52,9 @@
         "test": "mocha",
         "test-nyc": "nyc mocha",
         "coverage": "nyc report --reporter=text-lcov | coveralls",
-        "pack": "npm run build",
         "postversion": "git push && git push --tags",
         "prepack": "npm run preversion",
-        "preversion": "npm install && npm run build"
+        "preversion": "npm install && npm run build && npm run test"
     },
     "keywords": [
         "haeley",
