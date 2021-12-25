@@ -48,7 +48,7 @@
     "scripts": {
         "build:dev": "vite dev",
         "build": "vite build && tsc --emitDeclarationOnly",
-        "lint": "eslint .",
+        "lint": "eslint source",
         "test": "mocha",
         "test-nyc": "nyc mocha",
         "coverage": "nyc report --reporter=text-lcov | coveralls",

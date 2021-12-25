@@ -30,6 +30,9 @@
     "files": [
         "source/index.ts"
     ],
+    "include": [
+        "source/**/*.ts",
+    ],
     "exclude": [
         "node_modules",
         "dist"

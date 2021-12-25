@@ -19,21 +19,16 @@
         "ecmaVersion": 2020,
         "sourceType": "module",
         "project": [
-            "tsconfig.eslint.json"
+            "tsconfig.json"
         ]
     },
     "rules": {
-        "default-case": "error",
-        "default-case-last": "error",
-        "no-case-declarations": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-inferrable-types": [
             "off",
             "ignore-params"
         ],
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-namespace": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-non-null-assertion": "warn",
         "@typescript-eslint/ban-types": [
             "error",
             {
@@ -42,17 +37,5 @@
                 }
             }
         ]
-    },
-    "overrides": [
-        {
-            "files": [
-                "*.test.ts"
-            ],
-            "rules": {
-                "@typescript-eslint/no-empty-function": "off",
-                "@typescript-eslint/no-unused-vars": "off",
-                "@typescript-eslint/no-var-requires": "off"
-            }
-        }
-    ]
+    }
 }
