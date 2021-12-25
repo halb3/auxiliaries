@@ -1,15 +1,16 @@
-name: build, test, and report coverage
+name: npm ci
 
 on:
   push:
-    branches:
-      - master
-  workflow_dispatch:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
-    name: Build, Test, and Report Coverage
+
     runs-on: ubuntu-latest
+
     steps:
       - name: Initialize Node.js environment
         uses: actions/setup-node@v2
@@ -28,5 +29,5 @@ jobs:
         shell: bash
         env:
           COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_REPO_TOKEN}}
-      - name: Report coveralls
-        run: npm run coveralls
+      - name: Report coverage
+        run: npm run coverage
