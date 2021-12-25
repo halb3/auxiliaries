@@ -1,0 +1,10 @@
+{
+    "bail": true,
+    "diff": true,
+    "extension": ["ts"],
+    "spec": "test/**/*.test.ts",
+    "require": [
+        "ts-node/register"
+    ],
+    "reporter": "spec"
+}

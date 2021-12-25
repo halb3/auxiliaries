@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2020",
+        "esModuleInterop": true,
+        "lib": [
+            "dom",
+            "es2020"
+        ],
+        "outDir": "dist",
+        "allowSyntheticDefaultImports": false,
+        "alwaysStrict": true,
+        "declaration": true,
+        "declarationDir": "dist/types",
+        "experimentalDecorators": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "preserveConstEnums": true,
+        "removeComments": false,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strictNullChecks": true
+    },
+    "typedocOptions": {
+        "out": "doc",
+        "excludePrivate": false,
+        "hideGenerator": true
+    },
+    "files": [
+        "source/index.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

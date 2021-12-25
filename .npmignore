@@ -1,0 +1,17 @@
+.DS_Store
+.git
+.nyc_output
+.vscode
+.gitignore
+
+.nycrc*
+.mocharc*
+.eslint*
+
+tsconfig.*
+vite.config.*
+
+source/index.html
+test
+dist/test-results
+haeley-auxiliaries-*
