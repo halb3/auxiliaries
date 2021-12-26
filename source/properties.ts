@@ -3,7 +3,7 @@
 
 /* spellchecker: disable */
 
-import { Validator } from 'jsonschema';
+import { Validator, Schema } from 'jsonschema';
 
 import { assert, logIf, LogLevel } from './auxiliaries';
 import { ChangeLookup } from './changelookup';
@@ -16,14 +16,15 @@ import { ChangeLookup } from './changelookup';
  * @param instance - Object to complement default values for.
  * @param schema - Schema used for validation.
  */
-function complementProperty(instance: any | undefined, schema: any): void {
+function complementProperty(instance: any | undefined, schema: Schema): void {
 
-    const propertiesSchema = (schema as any)['properties'];
-    const props = Object.getOwnPropertyNames(propertiesSchema);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const properties = schema.properties!;
+    const props = Object.getOwnPropertyNames(properties);
 
     for (const key of props) {
-        const propertySchema = propertiesSchema[key];
-        const type: string | undefined = propertySchema['type'];
+        const propertySchema = properties[key];
+        const type: string | string[] | undefined = propertySchema.type;
 
         const isObject = type === 'object';
         const isDefined = instance.hasOwnProperty(key);
@@ -41,7 +42,7 @@ function complementProperty(instance: any | undefined, schema: any): void {
         } else if (!isDefined && hasDefault) {
             /* Default value for not yet defined property. */
             Object.defineProperty(instance, key, {
-                value: propertySchema['default'],
+                value: (propertySchema as any)['default'],
                 writable: true,
             });
         }
@@ -77,7 +78,7 @@ function complementArray(instance: any | undefined, schema: any): void {
  * @returns - True iff the provided instance in valid according to the schema.
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function validate(instance: any, schema: object, references?: Array<[object, string]>): boolean {
+export function validate(instance: any, schema: Schema, references?: Array<[object, string]>): boolean {
     const validator = new Validator();
     if (references !== undefined) {
         for (const reference of references) {

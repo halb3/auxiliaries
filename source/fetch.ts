@@ -1,6 +1,7 @@
 
 /* spellchecker: disable */
 
+import { Schema } from 'jsonschema';
 import { validate } from './properties';
 
 /* spellchecker: enable */
@@ -52,7 +53,7 @@ export function fetchAsync<T>(url: string, type: XMLHttpRequestResponseType): Pr
  * @returns - A promise that resolves on a parsed JSON object if successful.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function fetchJsonAsync<T>(url: string, transform: FetchTransform<T>, schema?: any): Promise<T> {
+export function fetchJsonAsync<T>(url: string, transform: FetchTransform<T>, schema?: Schema): Promise<T> {
 
     const response = new Promise<T>((resolve, reject) => {
         const request = new XMLHttpRequest();
@@ -64,21 +65,20 @@ export function fetchJsonAsync<T>(url: string, transform: FetchTransform<T>, sch
                 return;
             }
 
-            const json = request.responseText;
-            if (schema !== undefined && !validate(json, schema)) {
-                return;
-            }
-
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            let data: any;
+            let json: any;
             try {
-                data = JSON.parse(json);
+                json = JSON.parse(request.responseText);
             } catch (error) {
                 reject(`fetching '${url}' failed (${error.name}): ${error.message}`);
                 return;
             }
 
-            const object = transform(data);
+            if (schema !== undefined && !validate(json, schema)) {
+                return;
+            }
+
+            const object = transform(json);
             if (object === undefined) {
                 reject(`fetching '${url}' failed (TransformError): transforming the object failed.`);
                 return;
