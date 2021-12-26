@@ -1,8 +1,7 @@
 {
     "check-coverage": false,
     "include": [
-        "source/**/*.ts",
-        "tests/**/*.test.ts"
+        "source/**/*.ts"
     ],
     "exclude": [
         "**/*.d.ts"
