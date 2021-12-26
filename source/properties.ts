@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-prototype-builtins */
 
 /* spellchecker: disable */
 
@@ -8,7 +10,6 @@ import { ChangeLookup } from './changelookup';
 
 /* spellchecker: enable */
 
-/* eslint-disable no-prototype-builtins */
 
 /**
  *

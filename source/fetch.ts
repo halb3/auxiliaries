@@ -9,6 +9,7 @@ import { validate } from './properties';
 const failed = (url: string, request: XMLHttpRequest) =>
     `fetching '${url}' failed (${request.status}): ${request.statusText}`;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface FetchTransform<T> { (data: any): T | undefined; }
 
 /**
@@ -50,6 +51,7 @@ export function fetchAsync<T>(url: string, type: XMLHttpRequestResponseType): Pr
  * @param schema - Optional schema, that if specified, is used to validate the fetched json data.
  * @returns - A promise that resolves on a parsed JSON object if successful.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function fetchJsonAsync<T>(url: string, transform: FetchTransform<T>, schema?: any): Promise<T> {
 
     const response = new Promise<T>((resolve, reject) => {
@@ -67,6 +69,7 @@ export function fetchJsonAsync<T>(url: string, transform: FetchTransform<T>, sch
                 return;
             }
 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             let data: any;
             try {
                 data = JSON.parse(json);

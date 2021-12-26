@@ -83,6 +83,7 @@ export function assertions(enable?: boolean): boolean {
  * @param verbosity - Verbosity of log level: user, developer, or module developer.
  * @param message - Message to be passed to the log (if verbosity high enough).
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function log(verbosity: LogLevel, ...message: Array<any>): void {
     if (verbosity > logVerbosityThreshold) {
         return;
@@ -99,6 +100,7 @@ export function log(verbosity: LogLevel, ...message: Array<any>): void {
  * @param verbosity - Verbosity of log level: debug, info, warning, or error.
  * @param message - Message to be passed to the log (if thrown and verbosity high enough).
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function logIf(statement: boolean, verbosity: LogLevel, ...message: Array<any>): void {
     if (!statement) {
         return;
@@ -172,8 +174,8 @@ export function logPerformanceStop(mark: string, message: string | undefined, me
     performance.clearMarks(end);
     performance.clearMeasures(mark);
 
-    const minIndent = message === undefined || message!.length === 0 ? 0 : 2;
-    const indent = Math.max(minIndent, measureIndent - mark.length - (message ? message!.length : 0) - 1);
+    const minIndent = message === undefined || message.length === 0 ? 0 : 2;
+    const indent = Math.max(minIndent, measureIndent - mark.length - (message ? message.length : 0) - 1);
 
     const prettyMeasure = prettyPrintMilliseconds(measure.duration);
     log(LogLevel.Debug, `${mark}${' '.repeat(indent)}${message ? message : ''} | ${prettyMeasure}`);
@@ -299,8 +301,8 @@ export const DEG2RAD = 0.017453292519943295;
  */
 export function GETsearch(): string {
     let search = window.location.search;
-    if (!search) {
-        search = window.top!.location.search;
+    if (!search && window.top) {
+        search = window.top.location.search;
     }
     return search;
 }
@@ -312,9 +314,9 @@ export function GETsearch(): string {
 export function GETparameter(parameter: string): string | undefined {
     const re = new RegExp(`${parameter}=([^&]+)`);
     let match = window.location.search.match(re);
-    if (!match) {
+    if (!match && window.top) {
         // For iframe contents (i.e., the embedded /examples/ files), look within the top frame's search params
-        match = window.top!.location.search.match(re);
+        match = window.top.location.search.match(re);
     }
     if (!match) {
         return undefined;

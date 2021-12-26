@@ -26,6 +26,7 @@ export class ChangeLookup {
     /**
      * Also allow for string-based index access in TypeScript.
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [index: string]: boolean | any;
 
 
@@ -35,6 +36,7 @@ export class ChangeLookup {
      * @param path - Relative path w.r.t. to the given property.
      * @param property - Property to continue traversal of the given relative path on.
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected static alter(path: string, property: any): void {
 
         // eslint-disable-next-line no-prototype-builtins
@@ -42,7 +44,10 @@ export class ChangeLookup {
         property.any = true;
 
         const names = path.split('.');
-        const name = names.shift()!;
+        let name = names.shift();
+        if (name === undefined) {
+            name = '';
+        }
 
         // eslint-disable-next-line no-prototype-builtins
         assert(name === '' || property.hasOwnProperty(name),
@@ -72,6 +77,7 @@ export class ChangeLookup {
      * recursively reset. Every other child is directly set to false (including any).
      * @param property - Property to reset alteration states of.
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected static reset(property: any): void {
         for (const name of Object.getOwnPropertyNames(property)) {
             if (typeof property[name] === 'object') {
