@@ -3,12 +3,11 @@ import { resolve } from 'path';
 import git from 'git-rev-sync';
 
 import { defineConfig, UserConfigExport } from 'vite';
+// import { visualizer } from 'rollup-plugin-visualizer';
 
 const root = resolve(__dirname, 'source');
 const outDir = resolve(__dirname, 'dist');
 
-
-/*eslint no-unused-vars: ["error", {"args": "after-used"}]*/
 
 export default defineConfig(({ mode }) => {
 
@@ -18,9 +17,11 @@ export default defineConfig(({ mode }) => {
             outDir,
             lib: {
                 entry: resolve(root, 'index.ts'),
-                name: 'haeley-auxiliaries'
-            }//,
-            // sourcemap: true,
+                name: 'haeley-auxiliaries',
+                formats: ['cjs', 'umd', 'es'],
+                // fileName: (format: ModuleFormat): string => format === 'umd' ? 'index.js' : `haeley-auxiliaries.${format}.js`
+            },
+            sourcemap: 'hidden',
             // rollupOptions: {
             //     external: ['rxjs'],
             //     output: {
@@ -37,7 +38,8 @@ export default defineConfig(({ mode }) => {
             __LIB_VERSION__: JSON.stringify(process.env.npm_package_version),
             __DISABLE_ASSERTIONS__: JSON.stringify(false),
             __LOG_VERBOSITY_THRESHOLD__: JSON.stringify(3)
-        }
+        },
+        // plugins: [visualizer()]
     };
 
     // switch (command) {
@@ -56,7 +58,7 @@ export default defineConfig(({ mode }) => {
             config.build.outDir = outDir;
             break;
 
-        case 'production': // build specific config
+        case 'production':
         default:
             config.build.emptyOutDir = true;
             config.define.__DISABLE_ASSERTIONS__ = JSON.stringify(true);

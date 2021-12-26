@@ -4,9 +4,17 @@
     "license": "MIT",
     "description": "Auxiliary TypeScript library for the haeley real-time rendering framework.",
     "author": "Daniel Limberger",
-    "main": "dist/",
-    "types": "dist/types/",
-    "jsdelivr": "dist/haeley-auxiliaries.umd.js",
+    "main": "dist/haeley-auxiliaries.umd.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        "import": "dist/haeley-auxiliaries.es.js",
+        "require": "dist/haeley-auxiliaries.umd.js"
+    },
+    "module": "dist/haeley-auxiliaries.es.js",
+    "files": [
+        "dist/*",
+        "source/**/*.ts"
+    ],
     "bugs": {
         "email": "cgdaniel@outlook.com",
         "url": "https://github.com/halb3/haeley-auxiliaries/issues"
@@ -43,14 +51,15 @@
         "ts-loader": "^9.2.6",
         "ts-node": "^10.4.0",
         "typescript": "^4.5.4",
-        "vite": "^2.7.6"
+        "vite": "^2.7.6",
+        "vite-plugin-dts": "^0.9.6"
     },
     "scripts": {
-        "build:dev": "vite dev",
         "build": "vite build && tsc --emitDeclarationOnly",
-        "lint": "eslint source",
+        "build:dev": "vite dev",
         "test": "mocha",
-        "test-nyc": "nyc mocha",
+        "test:nyc": "nyc mocha",
+        "lint": "eslint source",
         "coverage": "nyc report --reporter=text-lcov | coveralls",
         "postversion": "git push && git push --tags",
         "prepack": "npm run preversion",

@@ -2,7 +2,7 @@
     "check-coverage": false,
     "include": [
         "source/**/*.ts",
-        "test/**/*.test.ts"
+        "tests/**/*.test.ts"
     ],
     "exclude": [
         "**/*.d.ts"
@@ -18,7 +18,7 @@
         "cobertura",
         "lcov"
     ],
-    "report-dir": "dist/test-results",
+    "report-dir": "test-results",
     "sourceMap": true,
     "instrument": true,
     "cache": true,

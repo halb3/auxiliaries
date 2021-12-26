@@ -1,7 +1,9 @@
-.DS_Store
 .git
-.nyc_output
-dist
 node_modules
 package-lock.json
+.DS_Store
+
+.nyc_output
+dist
+test-results
 haeley-auxiliaries-*.tgz
