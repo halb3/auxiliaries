@@ -7,4 +7,3 @@
 [![Coveralls](https://img.shields.io/coveralls/github/halb3/haeley-auxiliaries.svg?logo=coveralls)](https://coveralls.io/github/halb3/haeley-auxiliaries/)
 [![CodeFactor](https://img.shields.io/codefactor/grade/github/halb3/haeley-auxiliaries/main.svg?logo=codefactor)](https://www.codefactor.io/repository/github/halb3/haeley-auxiliaries/)
 ![License](https://img.shields.io/github/license/halb3/haeley-auxiliaries.svg?logo=coveralls)
-[![Tokei](https://img.shields.io/tokei/lines/github/halb3/haeley-auxiliaries)](https://github.com/Aaronepower/tokei)
