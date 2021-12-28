@@ -16,6 +16,7 @@ export interface FetchTransform<T> { (data: any): T | undefined; }
 /**
  * Creates a promise for an asynchronous xml/http request on a given URL. If an URL is fetched successfully, the
  * promise is resolved with the fetched data.
+ * @todo: switch to fetch API instead of XMLHttpRequest...
  * @param url - Uniform resource locator string referencing a file.
  * @param type - Request response type.
  * @returns - A promise that resolves on a parsed object if successful.
@@ -47,6 +48,7 @@ export function fetchAsync<T>(url: string, type: XMLHttpRequestResponseType): Pr
 /**
  * Creates a promise for an asynchronous xml/http request on a given URL. If an URL is fetched successfully, the
  * promise is resolved with a parsed JSON object. An error code and message can be caught otherwise.
+ * @todo: switch to fetch API instead of XMLHttpRequest...
  * @param url - Uniform resource locator string referencing a JSON file.
  * @param transform - Callback to a function that transforms the fetched data into an instance of targeted type.
  * @param schema - Optional schema, that if specified, is used to validate the fetched json data.
