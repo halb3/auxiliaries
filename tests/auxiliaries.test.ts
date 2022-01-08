@@ -112,27 +112,6 @@ describe('auxiliaries log and logIf', () => {
 });
 
 
-describe('auxiliaries rand', () => {
-
-    it('should not exceed range within 1000 tests (fuzzy)', () => {
-        for (let i = 0; i < 1000; ++i) {
-            const value = auxiliaries.rand(-i, +i);
-            expect(value).to.be.at.least(-i);
-            expect(value).to.be.at.most(+i);
-        }
-    });
-
-    it('should return in range [0.0,1.0] by default (fuzzy)', () => {
-        for (let i = 0; i < 1000; ++i) {
-            const value = auxiliaries.rand();
-            expect(value).to.be.at.least(0.0);
-            expect(value).to.be.at.most(1.0);
-        }
-    });
-
-});
-
-
 describe('auxiliaries prettyPrintBytes', () => {
 
     it('should print bytes for bytes < 1024', () => {
@@ -169,63 +148,6 @@ describe('auxiliaries prettyPrintMilliseconds', () => {
         expect(auxiliaries.prettyPrintMilliseconds(1e-7)).to.equal('0.100ns');
         expect(auxiliaries.prettyPrintMilliseconds(1e-8)).to.equal('0.010ns');
         expect(auxiliaries.prettyPrintMilliseconds(1e-9)).to.equal('0.001ns');
-    });
-
-});
-
-
-describe('auxiliaries bitInBitfield', () => {
-
-    it('should detect set/unset bits in bitfield', () => {
-        expect(auxiliaries.bitInBitfield(0, 0)).to.be.true;
-
-        const bits = 1 << 1 | 1 << 4;
-
-        expect(auxiliaries.bitInBitfield(bits, 1 << 0)).to.be.false;
-        expect(auxiliaries.bitInBitfield(bits, 1 << 1)).to.be.true;
-        expect(auxiliaries.bitInBitfield(bits, 1 << 2)).to.be.false;
-        expect(auxiliaries.bitInBitfield(bits, 1 << 3)).to.be.false;
-        expect(auxiliaries.bitInBitfield(bits, 1 << 4)).to.be.true;
-        expect(auxiliaries.bitInBitfield(bits, 1 << 5)).to.be.false;
-        expect(auxiliaries.bitInBitfield(bits, 1 << 6)).to.be.false;
-        expect(auxiliaries.bitInBitfield(bits, 1 << 7)).to.be.false;
-
-        expect(auxiliaries.bitInBitfield(bits, bits)).to.be.true;
-    });
-
-    it('should return false for undefined flag', () => {
-        expect(auxiliaries.bitInBitfield(0, undefined)).to.be.false;
-    });
-
-});
-
-
-describe('auxiliaries RAD2DEG and DEG2RAD', () => {
-
-    it('should be bijective', () => {
-        expect(auxiliaries.DEG2RAD * auxiliaries.RAD2DEG).to.equal(1.0);
-    });
-
-    it('should convert degree to radian for sample set', () => {
-        expect(auxiliaries.DEG2RAD * 45.0).to.be.closeTo(Math.PI / 4, 1e-8);
-        expect(auxiliaries.DEG2RAD * 90.0).to.be.closeTo(Math.PI / 2, 1e-8);
-        expect(auxiliaries.DEG2RAD * 135.0).to.be.closeTo(3 * Math.PI / 4, 1e-8);
-        expect(auxiliaries.DEG2RAD * 180.0).to.be.closeTo(Math.PI, 1e-8);
-        expect(auxiliaries.DEG2RAD * 225.0).to.be.closeTo(5 * Math.PI / 4, 1e-8);
-        expect(auxiliaries.DEG2RAD * 270.0).to.be.closeTo(3 * Math.PI / 2, 1e-8);
-        expect(auxiliaries.DEG2RAD * 315.0).to.be.closeTo(7 * Math.PI / 4, 1e-8);
-        expect(auxiliaries.DEG2RAD * 360.0).to.be.closeTo(2 * Math.PI, 1e-8);
-    });
-
-    it('should convert radian to degree for sample set', () => {
-        expect(auxiliaries.RAD2DEG * Math.PI / 4).to.be.closeTo(45.0, 1e-8);
-        expect(auxiliaries.RAD2DEG * Math.PI / 2).to.be.closeTo(90.0, 1e-8);
-        expect(auxiliaries.RAD2DEG * 3 * Math.PI / 4).to.be.closeTo(135.0, 1e-8);
-        expect(auxiliaries.RAD2DEG * Math.PI).to.be.closeTo(180.0, 1e-8);
-        expect(auxiliaries.RAD2DEG * 5 * Math.PI / 4).to.be.closeTo(225.0, 1e-8);
-        expect(auxiliaries.RAD2DEG * 3 * Math.PI / 2).to.be.closeTo(270.0, 1e-8);
-        expect(auxiliaries.RAD2DEG * 7 * Math.PI / 4).to.be.closeTo(315.0, 1e-8);
-        expect(auxiliaries.RAD2DEG * 2 * Math.PI).to.be.closeTo(360.0, 1e-8);
     });
 
 });
@@ -291,48 +213,3 @@ describe('auxiliaries path', () => {
     });
 
 });
-
-
-describe('auxiliaries power-of-two', () => {
-
-    it('should return detect if number is power of two', () => {
-
-        expect(auxiliaries.isPowerOfTwo(0)).to.be.false;
-        for (let i = 0; i < 31; ++i) {
-            expect(auxiliaries.isPowerOfTwo(1 << i)).to.be.true;
-        }
-
-        expect(auxiliaries.isPowerOfTwo(3)).to.be.false;
-        expect(auxiliaries.isPowerOfTwo(5)).to.be.false;
-        expect(auxiliaries.isPowerOfTwo(7)).to.be.false;
-        expect(auxiliaries.isPowerOfTwo(15)).to.be.false;
-
-        expect(auxiliaries.isPowerOfTwo(1 << 31)).to.be.false;
-        expect(auxiliaries.isPowerOfTwo((1 << 30) - 1)).to.be.false;
-
-        expect(auxiliaries.isPowerOfTwo(-1)).to.be.false;
-        expect(auxiliaries.isPowerOfTwo(-2)).to.be.false;
-        expect(auxiliaries.isPowerOfTwo(-3)).to.be.false;
-    });
-
-    it('should return upper power of two for a given number', () => {
-
-        expect(auxiliaries.upperPowerOfTwo(-2)).to.equal(0);
-        expect(auxiliaries.upperPowerOfTwo(-1)).to.equal(0);
-
-        expect(auxiliaries.upperPowerOfTwo(0)).to.equal(0);
-        expect(auxiliaries.upperPowerOfTwo(1)).to.equal(1);
-        expect(auxiliaries.upperPowerOfTwo(2)).to.equal(2);
-        expect(auxiliaries.upperPowerOfTwo(3)).to.equal(4);
-        expect(auxiliaries.upperPowerOfTwo(4)).to.equal(4);
-        expect(auxiliaries.upperPowerOfTwo(5)).to.equal(8);
-
-        expect(auxiliaries.upperPowerOfTwo(192)).to.equal(256);
-        expect(auxiliaries.upperPowerOfTwo(768)).to.equal(1024);
-
-        expect(auxiliaries.upperPowerOfTwo(768)).to.equal(1024);
-        expect(auxiliaries.upperPowerOfTwo(708405415)).to.equal(1 << 30);
-    });
-
-});
-

@@ -24,12 +24,21 @@
             <div class="col-10-sm col-8">
 
                 <h1>haeley-<strong>auxiliaries</strong></h1>
-                <p class="lead">Test Page</p>
+                <p class="lead">Test Page for Development</p>
                 <p>// about:
                     version <code id="version">version</code>,
                     branch <code id="branch">branch</code>,
                     commit <code id="commit">commit</code>.
                 </p>
+
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-10-sm col-8">
+
+                <p>Console Log (captured):</p>
+                <pre id="log"></pre>
 
             </div>
         </div>
@@ -45,6 +54,15 @@
 </script>
 
 <script>
+
+    // capture console log output
+    const log = document.querySelector('#log');
+    var genuineLog = console.log;
+    console.log = function () {
+        genuineLog.apply(console, arguments);
+        log.innerHTML += [...arguments].join(' ') + '\r\n';
+    };
+
     window.onload = () => {
 
         document.title = __LIB_NAME__;
@@ -52,7 +70,62 @@
         document.querySelector('#branch').innerHTML = haeley.auxiliaries.branch();
         document.querySelector('#commit').innerHTML = haeley.auxiliaries.commit();
 
-        console.log("'haeley-auxiliaries' imported:", haeley);
+        const aux = haeley.auxiliaries;
+        const LogLevel = aux.LogLevel;
+
+        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Log Verbosity on LogLevel.Debug</span>`);
+        aux.logVerbosity(LogLevel.Debug);
+        aux.log(LogLevel.Error, `log message on Error level '${LogLevel.Error}'`);
+        aux.log(LogLevel.Warning, `log message on Warning level '${LogLevel.Warning}'`);
+        aux.log(LogLevel.Info, `log message on Info level '${LogLevel.Info}'`);
+        aux.log(LogLevel.Debug, `log message on Debug level '${LogLevel.Debug}'`);
+
+        aux.log(LogLevel.Error, `<span class="text-primary">// TEST: Log Verbosity on LogLevel.Warning</span>`);
+        aux.logVerbosity(LogLevel.Warning);
+        aux.log(LogLevel.Error, `log message on Error level '${LogLevel.Error}'`);
+        aux.log(LogLevel.Warning, `log message on Warning level '${LogLevel.Warning}'`);
+        aux.log(LogLevel.Info, `log message on Info level '${LogLevel.Info}'`);
+        aux.log(LogLevel.Debug, `log message on Debug level '${LogLevel.Debug}'`);
+
+        // cannot use haeley-math ...
+        const rand = (min, max) => Math.random() * (max - min) + min;
+
+        aux.logVerbosity(LogLevel.Debug);
+        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Pretty Printing Bytes</span>`);
+        for (i = 0; i < 9; ++i) {
+            const bytes = Math.floor(rand(Math.pow(1024, i), Math.pow(1024, i + 1)));
+            aux.log(LogLevel.Debug, aux.prettyPrintBytes(bytes));
+        }
+
+        aux.logVerbosity(LogLevel.Debug);
+        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Pretty Printing Milliseconds</span>`);
+        for (i = 0; i < 8; ++i) {
+            const milliseconds = rand(1e+6 / Math.pow(100, i + 1), 1e+6 / Math.pow(100, i));
+            aux.log(LogLevel.Debug, aux.prettyPrintMilliseconds(milliseconds));
+        }
+
+        aux.logVerbosity(LogLevel.Debug);
+        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Math Stuff</span>`);
+        for (i = 0; i < 8; ++i) {
+            const milliseconds = rand(1e+6 / Math.pow(100, i + 1), 1e+6 / Math.pow(100, i));
+            aux.log(LogLevel.Debug, aux.prettyPrintMilliseconds(milliseconds));
+        }
+
+
+        aux.logVerbosity(LogLevel.Debug);
+        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Performance Log</span>`);
+        aux.log(LogLevel.Debug, 'wait for it...');
+        aux.logPerformanceStart('timer 1e+1');
+        setTimeout(() => aux.logPerformanceStop('timer 1e+1'), 1);
+        aux.logPerformanceStart('timer 4e+2');
+        setTimeout(() => aux.logPerformanceStop('timer 4e+2'), 40);
+        aux.logPerformanceStart('timer 2e+3');
+        setTimeout(() => aux.logPerformanceStop('timer 2e+3'), 200);
+        aux.logPerformanceStart('timer 1e+4');
+        setTimeout(() => aux.logPerformanceStop('timer 1e+4'), 1000);
+        aux.logPerformanceStart('timer 2e+4');
+        setTimeout(() => aux.logPerformanceStop('timer 2e+4'), 2000);
+
     };
 </script>
 

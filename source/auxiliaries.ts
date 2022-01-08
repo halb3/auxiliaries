@@ -198,39 +198,6 @@ export function logPerformanceStopIf(statement: boolean,
 
 
 /**
- * Generates a random value within a given range [min,max].
- * @param min - Minimum random value possible.
- * @param max - Maximum random value possible.
- * @returns - Random number in the range [min,max].
- */
-export function rand(min: number = 0.0, max: number = 1.0): number {
-    return Math.random() * (max - min) + min;
-}
-
-/**
- * Tests with binary operations if the number is power of two.
- * @param x The number to test.
- */
-export function isPowerOfTwo(x: number): boolean {
-    return Number.isInteger(x) && Number.isInteger(Math.log2(x));
-}
-
-/**
- * Computes the next upper power of two for the given number. Math is based on
- * {@link https://graphics.stanford.edu/~seander/bithacks.html}.
- * @param x - Number to compute next upper power of two for.
- */
-export function upperPowerOfTwo(x: number): number {
-    --x;
-    x |= x >> 1;
-    x |= x >> 2;
-    x |= x >> 4;
-    x |= x >> 8;
-    x |= x >> 16;
-    return ++x;
-}
-
-/**
  * Byte suffixes based on ISO/IEC 80000 used for pretty printing of bytes.
  */
 const byteSuffixes: Array<string> = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi', 'Yi'];
@@ -274,27 +241,6 @@ export function prettyPrintMilliseconds(milliseconds: number): string {
     const value = milliseconds * msScales[prefix];
     return `${value.toFixed(3)}${msSuffixes[prefix]}`;
 }
-
-
-/**
- * Tests if specific bits are set in a given bitfield and returns true if so, false otherwise.
- */
-export function bitInBitfield(flags: GLbitfield, flag: GLbitfield | undefined): boolean {
-    if (flag === undefined) {
-        return false;
-    }
-    return (flags & flag) === flag;
-}
-
-/**
- * Conversion multiplier for radians to degrees conversion (180 / PI).
- */
-export const RAD2DEG = 57.29577951308232;
-
-/**
- * Conversion multiplier for degrees to radians conversion (PI / 180).
- */
-export const DEG2RAD = 0.017453292519943295;
 
 /**
  * Queries window.location.search, or, if not present, window.location.search of the window's top frame.
