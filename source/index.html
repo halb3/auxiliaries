@@ -37,8 +37,23 @@
         <div class="row justify-content-center">
             <div class="col-10-sm col-8">
 
-                <p>Console Log (captured):</p>
-                <pre id="log"></pre>
+                <h2>Log Tests</h2>
+                <p>Check out the actual console output for the interleaved sequence of log messages.</p>
+
+                <p><strong>Console Log</strong> Capture:</p>
+                <pre class="bg-light px-3 py-2 border-start text-black" id="log"></pre>
+
+                <p><strong>Console Error</strong> Capture:</p>
+                <pre class="bg-light px-3 py-2 border-start text-danger" id="error"></pre>
+
+                <p><strong>Console Warn</strong> Capture:</p>
+                <pre class="bg-light px-3 py-2 border-start text-warning" id="warn"></pre>
+
+                <p><strong>Console Info</strong> Capture:</p>
+                <pre class="bg-light px-3 py-2 border-start text-primary" id="info"></pre>
+
+                <p><strong>Console Debug</strong> Capture:</p>
+                <pre class="bg-light px-3 py-2 border-start text-muted" id="debug"></pre>
 
             </div>
         </div>
@@ -55,12 +70,37 @@
 
 <script>
 
-    // capture console log output
+    const info = document.querySelector('#info');
     const log = document.querySelector('#log');
+    const warn = document.querySelector('#warn');
+    const error = document.querySelector('#error');
+    const debug = document.querySelector('#debug');
+
+    var genuineInfo = console.info;
     var genuineLog = console.log;
+    var genuineWarn = console.warn;
+    var genuineError = console.error;
+    var genuineDebug = console.debug;
+
+    console.info = function () {
+        genuineInfo.apply(console, arguments);
+        info.innerHTML += [...arguments].join(' ') + '\r\n';
+    };
     console.log = function () {
         genuineLog.apply(console, arguments);
         log.innerHTML += [...arguments].join(' ') + '\r\n';
+    };
+    console.warn = function () {
+        genuineWarn.apply(console, arguments);
+        warn.innerHTML += [...arguments].join(' ') + '\r\n';
+    };
+    console.error = function () {
+        genuineError.apply(console, arguments);
+        error.innerHTML += [...arguments].join(' ') + '\r\n';
+    };
+    console.debug = function () {
+        genuineDebug.apply(console, arguments);
+        debug.innerHTML += [...arguments].join(' ') + '\r\n';
     };
 
     window.onload = () => {
@@ -73,48 +113,38 @@
         const aux = haeley.auxiliaries;
         const LogLevel = aux.LogLevel;
 
-        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Log Verbosity on LogLevel.Debug</span>`);
-        aux.logVerbosity(LogLevel.Debug);
-        aux.log(LogLevel.Error, `log message on Error level '${LogLevel.Error}'`);
-        aux.log(LogLevel.Warning, `log message on Warning level '${LogLevel.Warning}'`);
-        aux.log(LogLevel.Info, `log message on Info level '${LogLevel.Info}'`);
-        aux.log(LogLevel.Debug, `log message on Debug level '${LogLevel.Debug}'`);
-
-        aux.log(LogLevel.Error, `<span class="text-primary">// TEST: Log Verbosity on LogLevel.Warning</span>`);
-        aux.logVerbosity(LogLevel.Warning);
-        aux.log(LogLevel.Error, `log message on Error level '${LogLevel.Error}'`);
-        aux.log(LogLevel.Warning, `log message on Warning level '${LogLevel.Warning}'`);
-        aux.log(LogLevel.Info, `log message on Info level '${LogLevel.Info}'`);
-        aux.log(LogLevel.Debug, `log message on Debug level '${LogLevel.Debug}'`);
+        aux.log(LogLevel.Debug, '// TEST: Log Verbosity');
+        for (i = 4; i >= 0; --i) {
+            aux.logVerbosity(3);
+            aux.log(LogLevel.Debug, `setting log verbosity to ${i}`);
+            aux.logVerbosity(i);
+            aux.log(LogLevel.Error, `log message on 'LogLevel.Error' level`);
+            aux.log(LogLevel.Warning, `log message on 'LogLevel.Warning' level`);
+            aux.log(LogLevel.Info, `log message on 'LogLevel.Info' level`);
+            aux.log(LogLevel.Debug, `log message on 'LogLevel.Debug' level`);
+            aux.log(4, `log message on 'LogLevel.Log' level`);
+        }
 
         // cannot use haeley-math ...
         const rand = (min, max) => Math.random() * (max - min) + min;
 
         aux.logVerbosity(LogLevel.Debug);
-        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Pretty Printing Bytes</span>`);
+        aux.log(LogLevel.Debug, `// TEST: Pretty Printing Bytes`);
         for (i = 0; i < 9; ++i) {
-            const bytes = Math.floor(rand(Math.pow(1024, i), Math.pow(1024, i + 1)));
+            const bytes = Math.floor(rand(Math.pow(1024, i), Math.pow(1024, i + 1) * 0.25));
             aux.log(LogLevel.Debug, aux.prettyPrintBytes(bytes));
         }
 
         aux.logVerbosity(LogLevel.Debug);
-        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Pretty Printing Milliseconds</span>`);
+        aux.log(LogLevel.Debug, `// TEST: Pretty Printing Milliseconds`);
         for (i = 0; i < 8; ++i) {
             const milliseconds = rand(1e+6 / Math.pow(100, i + 1), 1e+6 / Math.pow(100, i));
             aux.log(LogLevel.Debug, aux.prettyPrintMilliseconds(milliseconds));
         }
 
         aux.logVerbosity(LogLevel.Debug);
-        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Math Stuff</span>`);
-        for (i = 0; i < 8; ++i) {
-            const milliseconds = rand(1e+6 / Math.pow(100, i + 1), 1e+6 / Math.pow(100, i));
-            aux.log(LogLevel.Debug, aux.prettyPrintMilliseconds(milliseconds));
-        }
-
-
-        aux.logVerbosity(LogLevel.Debug);
-        aux.log(LogLevel.Debug, `<span class="text-primary">// TEST: Performance Log</span>`);
-        aux.log(LogLevel.Debug, 'wait for it...');
+        aux.log(LogLevel.Debug, `// TEST: Performance Log`);
+        aux.log(LogLevel.Debug, 'initializing 5 timeouts, wait for it...');
         aux.logPerformanceStart('timer 1e+1');
         setTimeout(() => aux.logPerformanceStop('timer 1e+1'), 1);
         aux.logPerformanceStart('timer 4e+2');

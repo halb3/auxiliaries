@@ -28,7 +28,7 @@ describe('Property validation', () => {
             additionalProperties: false,
         };
 
-        const consoleLogStub = stub(console, 'log');
+        const consoleWarnStub = stub(console, 'warn');
 
         expect(validate({ some_flag: true }, schema)).to.be.true;
 
@@ -38,7 +38,7 @@ describe('Property validation', () => {
         expect(validate({ some_flag: 'true' }, schema)).to.be.false;
         expect(validate({ some_flag: { value: true } }, schema)).to.be.false;
 
-        consoleLogStub.restore();
+        consoleWarnStub.restore();
     });
 
     it('should resolve schema references for validation', () => {
@@ -61,7 +61,7 @@ describe('Property validation', () => {
             additionalProperties: false,
         };
 
-        const consoleLogStub = stub(console, 'log');
+        const consoleWarnStub = stub(console, 'warn');
 
         expect(validate({ special: { value: true } }, schema, [[special, '/special']])).to.be.true;
 
@@ -70,7 +70,7 @@ describe('Property validation', () => {
 
         expect(() => validate({ special: { value: true } }, schema)).to.throw(SchemaError);
 
-        consoleLogStub.restore();
+        consoleWarnStub.restore();
     });
 
 });
@@ -99,7 +99,7 @@ describe('Property complementation', () => {
             },
         };
 
-        const consoleLogStub = stub(console, 'log');
+        const consoleWarnStub = stub(console, 'warn');
 
         const object: any = {};
         complement(object, schema);
@@ -108,7 +108,7 @@ describe('Property complementation', () => {
         expect(object).to.haveOwnProperty('bar');
         expect(object.bar).to.equal('value');
 
-        consoleLogStub.restore();
+        consoleWarnStub.restore();
     });
 
     it('should complement defaults (object)', () => {
@@ -130,7 +130,7 @@ describe('Property complementation', () => {
             },
         };
 
-        const consoleLogStub = stub(console, 'log');
+        const consoleWarnStub = stub(console, 'warn');
 
         let object: any = {};
         complement(object, schema);
@@ -143,7 +143,7 @@ describe('Property complementation', () => {
         expect(object.foo).to.haveOwnProperty('bar');
         expect(object.foo.bar).to.equal(2.0);
 
-        consoleLogStub.restore();
+        consoleWarnStub.restore();
     });
 
     it('should complement defaults (arrays)', () => {
@@ -163,7 +163,7 @@ describe('Property complementation', () => {
             },
         };
 
-        const consoleLogStub = stub(console, 'log');
+        const consoleWarnStub = stub(console, 'warn');
 
         const object: any = [{ other: true }];
         complement(object, schema);
@@ -172,20 +172,20 @@ describe('Property complementation', () => {
         expect(object[0].foo).to.equal('baz');
         expect(object[0]).to.not.haveOwnProperty('bar');
 
-        consoleLogStub.restore();
+        consoleWarnStub.restore();
     });
 
     it('should not complement defaults for non-object arrays', () => {
 
         const schema: any = { type: 'array', items: { type: 'integer' } };
-        const consoleLogStub = stub(console, 'log');
+        const consoleWarnStub = stub(console, 'warn');
 
         const object: Array<number> = [];
         complement(object, schema);
 
         expect(object).to.be.empty;
 
-        consoleLogStub.restore();
+        consoleWarnStub.restore();
     });
 
 });

@@ -36,7 +36,7 @@ export function logVerbosity(verbosity?: number): number {
 /**
  * Log verbosity levels.
  */
-export enum LogLevel { Debug = 3, Info = 2, Warning = 1, Error = 0 }
+export enum LogLevel { Log = 4, Debug = 3, Info = 2, Warning = 1, Error = 0 }
 
 /**
  * Evaluates the provided statement and throws an evaluation error if false.
@@ -88,7 +88,24 @@ export function log(verbosity: LogLevel, ...message: Array<any>): void {
     if (verbosity > logVerbosityThreshold) {
         return;
     }
-    console.log(`[${verbosity}]`, ...message);
+    switch (verbosity) {
+        case LogLevel.Error:
+            // console.error(`[${verbosity}]`, ...message);
+            console.error(...message);
+            break;
+        case LogLevel.Warning:
+            console.warn(...message);
+            break;
+        case LogLevel.Info:
+            console.info(...message);
+            break;
+        case LogLevel.Debug:
+            console.debug(...message);
+            break;
+        default:
+            console.log(...message);
+            break;
+    }
 }
 
 /**

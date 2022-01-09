@@ -36,78 +36,100 @@ describe('auxiliaries assert', () => {
 describe('auxiliaries log and logIf', () => {
 
     it('should not log on false expression', () => {
-        const consoleLogStub = stub(console, 'log');
+        const consoleLogStub = stub(console, 'error');
         auxiliaries.logIf(false, auxiliaries.LogLevel.Error, 'never log');
         expect(consoleLogStub.notCalled).to.be.true;
         consoleLogStub.restore();
     });
 
     it('should log on true expression', () => {
-        const consoleLogStub = stub(console, 'log');
+        const consoleLogStub = stub(console, 'error');
         auxiliaries.logIf(true, auxiliaries.LogLevel.Error, 'always log');
         expect(consoleLogStub.calledOnce).to.be.true;
         consoleLogStub.restore();
     });
 
     it('should use the correct log level', () => {
-        const f = fake();
-        const consoleLogStub = stub(console, 'log').callsFake(f);
+        const [ferror, fwarn, finfo, fdebug, flog] = [fake(), fake(), fake(), fake(), fake()];
+
+        const consoleErrorStub = stub(console, 'error').callsFake(ferror);
+        const consoleWarnStub = stub(console, 'warn').callsFake(fwarn);
+        const consoleInfoStub = stub(console, 'info').callsFake(finfo);
+        const consoleDebugStub = stub(console, 'debug').callsFake(fdebug);
+        const consoleLogStub = stub(console, 'log').callsFake(flog);
 
         auxiliaries.log(auxiliaries.LogLevel.Error, 'log level 0');
-        expect(f.lastCall.args).to.deep.equal(['[0]', 'log level 0']);
+        expect(ferror.lastCall.args).to.deep.equal(['log level 0']);
 
         auxiliaries.log(auxiliaries.LogLevel.Warning, 'log level 1');
-        expect(f.lastCall.args).to.deep.equal(['[1]', 'log level 1']);
+        expect(fwarn.lastCall.args).to.deep.equal(['log level 1']);
 
         auxiliaries.log(auxiliaries.LogLevel.Info, 'log level 2');
-        expect(f.lastCall.args).to.deep.equal(['[2]', 'log level 2']);
+        expect(finfo.lastCall.args).to.deep.equal(['log level 2']);
 
         auxiliaries.log(auxiliaries.LogLevel.Debug, 'log level 3');
-        expect(f.lastCall.args).to.deep.equal(['[3]', 'log level 3']);
+        expect(fdebug.lastCall.args).to.deep.equal(['log level 3']);
 
+        expect(flog.callCount).to.equal(0);
+
+        consoleErrorStub.restore();
+        consoleWarnStub.restore();
+        consoleInfoStub.restore();
+        consoleDebugStub.restore();
         consoleLogStub.restore();
     });
 
     it('should respect verbosity level', () => {
-        const f = fake();
-        const consoleLogStub = stub(console, 'log').callsFake(f);
+        const [ferror, fwarn, finfo, fdebug, flog] = [fake(), fake(), fake(), fake(), fake()];
+
+        const consoleErrorStub = stub(console, 'error').callsFake(ferror);
+        const consoleWarnStub = stub(console, 'warn').callsFake(fwarn);
+        const consoleInfoStub = stub(console, 'info').callsFake(finfo);
+        const consoleDebugStub = stub(console, 'debug').callsFake(fdebug);
+        const consoleLogStub = stub(console, 'log').callsFake(flog);
 
         auxiliaries.log(auxiliaries.LogLevel.Error, 'log level 0');
-        expect(f.lastCall.args).to.deep.equal(['[0]', 'log level 0']);
+        expect(ferror.lastCall.args).to.deep.equal(['log level 0']);
 
         auxiliaries.log(auxiliaries.LogLevel.Warning, 'log level 1');
-        expect(f.lastCall.args).to.deep.equal(['[1]', 'log level 1']);
+        expect(fwarn.lastCall.args).to.deep.equal(['log level 1']);
 
         auxiliaries.log(auxiliaries.LogLevel.Info, 'log level 2');
-        expect(f.lastCall.args).to.deep.equal(['[2]', 'log level 2']);
+        expect(finfo.lastCall.args).to.deep.equal(['log level 2']);
 
         auxiliaries.log(auxiliaries.LogLevel.Debug, 'log level 3');
-        expect(f.lastCall.args).to.deep.equal(['[3]', 'log level 3']);
+        expect(fdebug.lastCall.args).to.deep.equal(['log level 3']);
 
         auxiliaries.log(4, 'log level 4');
-        expect(f.lastCall.args).to.deep.equal(['[3]', 'log level 3']); // uses previous output (nothing changed)
+        expect(flog.callCount).to.equal(0);
+        expect(fdebug.lastCall.args).to.deep.equal(['log level 3']); // uses previous output (nothing changed)
 
         const thresholdRestore = auxiliaries.logVerbosity();
         auxiliaries.logVerbosity(4);
         auxiliaries.log(4, 'log level 4');
-        expect(f.lastCall.args).to.deep.equal(['[4]', 'log level 4']);
+        expect(flog.lastCall.args).to.deep.equal(['log level 4']);
 
         auxiliaries.logVerbosity(-1);
         auxiliaries.log(0, 'log level 0');
-        expect(f.lastCall.args).to.deep.equal(['[4]', 'log level 4']);
+        expect(flog.lastCall.args).to.deep.equal(['log level 4']);
 
         auxiliaries.logVerbosity(thresholdRestore);
+
+        consoleErrorStub.restore();
+        consoleWarnStub.restore();
+        consoleInfoStub.restore();
+        consoleDebugStub.restore();
         consoleLogStub.restore();
     });
 
     it('can be called with more parameters', () => {
         const f = fake();
-        const consoleLogStub = stub(console, 'log').callsFake(f);
+        const consoleWarnStub = stub(console, 'warn').callsFake(f);
 
         auxiliaries.log(auxiliaries.LogLevel.Warning, 'log level 1', { error: 'broke', code: 42 });
-        expect(f.lastCall.args).to.deep.equal(['[1]', 'log level 1', { error: 'broke', code: 42 }]);
+        expect(f.lastCall.args).to.deep.equal(['log level 1', { error: 'broke', code: 42 }]);
 
-        consoleLogStub.restore();
+        consoleWarnStub.restore();
     });
 });
 
