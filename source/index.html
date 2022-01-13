@@ -59,9 +59,17 @@
         </div>
     </section>
 
-</body>
+    <footer>
+        <div class="row text-center">
+            <div class="col-12">
+                <p class="mt-5 mb-4">
+                    &copy; 2016&thinsp;&ndash;&thinsp;<span id="cryear"></span>
+                </p>
+            </div>
+        </div>
+    </footer>
 
-<script src="//unpkg.com/treemap-chart"></script>
+</body>
 
 <script type="module">
     import * as auxiliaries from './index.ts';
@@ -109,6 +117,7 @@
         document.querySelector('#version').innerHTML = haeley.auxiliaries.version();
         document.querySelector('#branch').innerHTML = haeley.auxiliaries.branch();
         document.querySelector('#commit').innerHTML = haeley.auxiliaries.commit();
+        document.querySelector('#cryear').innerHTML = new Date().getFullYear();
 
         const aux = haeley.auxiliaries;
         const LogLevel = aux.LogLevel;
