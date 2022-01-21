@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
             __LIB_NAME__: JSON.stringify(process.env.npm_package_name),
             __LIB_VERSION__: JSON.stringify(process.env.npm_package_version),
             __DISABLE_ASSERTIONS__: JSON.stringify(false),
-            __LOG_VERBOSITY_THRESHOLD__: JSON.stringify(3)
+            __LOG_VERBOSITY_THRESHOLD__: JSON.stringify(4)
         },
         // plugins: [visualizer()]
     };

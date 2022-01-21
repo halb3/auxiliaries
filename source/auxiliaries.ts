@@ -16,7 +16,7 @@ declare let __LOG_VERBOSITY_THRESHOLD__: number; // -1 disables all logs
 
 
 /* istanbul ignore next line - __LOG_VERBOSITY_THRESHOLD__ has to be defined by the build environment*/
-let logVerbosityThreshold = typeof __LOG_VERBOSITY_THRESHOLD__ !== 'undefined' ? __LOG_VERBOSITY_THRESHOLD__ : 3;
+let logVerbosityThreshold = typeof __LOG_VERBOSITY_THRESHOLD__ !== 'undefined' ? __LOG_VERBOSITY_THRESHOLD__ : 4;
 
 /**
  * Allows to specify the log verbosity. The default verbosity depends on the bundle type, e.g., a production bundle
@@ -36,7 +36,7 @@ export function logVerbosity(verbosity?: number): number {
 /**
  * Log verbosity levels.
  */
-export enum LogLevel { Log = 4, Debug = 3, Info = 2, Warning = 1, Error = 0 }
+export enum LogLevel { Debug = 4, Info = 3, Log = 2, Warning = 1, Error = 0 }
 
 /**
  * Evaluates the provided statement and throws an evaluation error if false.
