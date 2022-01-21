@@ -1,6 +1,6 @@
 {
     "name": "haeley-auxiliaries",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "license": "MIT",
     "description": "Auxiliary TypeScript library for the haeley real-time rendering framework.",
     "author": "Daniel Limberger",
