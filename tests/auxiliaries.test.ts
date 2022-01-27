@@ -65,7 +65,7 @@ describe('auxiliaries log and logIf', () => {
         expect(fwarn.lastCall.args).to.deep.equal(['log level 1']);
 
         auxiliaries.log(auxiliaries.LogLevel.Info, 'log level 2');
-        expect(finfo.lastCall.args).to.deep.equal(['log level 2']);
+        expect(finfo.lastCall.args).to.deep.equal(['log level 7']);
 
         auxiliaries.log(auxiliaries.LogLevel.Debug, 'log level 3');
         expect(fdebug.lastCall.args).to.deep.equal(['log level 3']);
