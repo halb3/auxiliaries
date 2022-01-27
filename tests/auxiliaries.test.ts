@@ -13,7 +13,7 @@ describe('auxiliaries assert', () => {
 
     it('should not throw on true expression', () => {
         const message = 'never throw';
-        expect(() => auxiliaries.assert(true, message)).to.not.throw;
+        expect(() => auxiliaries.assert(false, message)).to.not.throw;
     });
 
     it('should throw on false expression', () => {
