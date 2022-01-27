@@ -16,12 +16,12 @@
     "source/**/*.ts"
   ],
   "bugs": {
-    "url": "https://github.com/halb3/haeley-auxiliaries/issues",
+    "url": "https://github.com/halb3/auxiliaries/issues",
     "email": "cgdaniel@outlook.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/halb3/haeley-auxiliaries.git"
+    "url": "git+https://github.com/halb3/auxiliaries.git"
   },
   "maintainers": [
     "Daniel Limberger <cgdaniel@outlook.com>"
@@ -70,7 +70,7 @@
     "computer graphics",
     "real-time"
   ],
-  "homepage": "https://github.com/halb3/haeley-auxiliaries#readme",
+  "homepage": "https://github.com/halb3/auxiliaries#readme",
   "directories": {
     "test": "tests"
   }
