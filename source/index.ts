@@ -17,4 +17,6 @@ export * from './fetch';
 export * as msagent from './msagent';
 export * from './invalidate';
 
+export * from './serializable';
+
 /* spellchecker: enable */
