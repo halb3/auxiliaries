@@ -13,12 +13,14 @@ describe('auxiliaries assert', () => {
 
     it('should not throw on true expression', () => {
         const message = 'never throw';
-        expect(() => auxiliaries.assert(false, message)).to.not.throw;
+        expect(auxiliaries.assertions()).to.be.true;
+        expect(() => { auxiliaries.assert(true, message); }).to.not.throw;
     });
 
     it('should throw on false expression', () => {
         const message = 'always throw';
-        expect(() => auxiliaries.assert(false, message)).to.throw;
+        expect(auxiliaries.assertions()).to.be.true;
+        expect(() => { auxiliaries.assert(false, message); }).to.throw;
     });
 
     it('should be allowed to be disabled', () => {
@@ -65,7 +67,7 @@ describe('auxiliaries log and logIf', () => {
         expect(fwarn.lastCall.args).to.deep.equal(['log level 1']);
 
         auxiliaries.log(auxiliaries.LogLevel.Info, 'log level 2');
-        expect(finfo.lastCall.args).to.deep.equal(['log level 7']);
+        expect(finfo.lastCall.args).to.deep.equal(['log level 2']);
 
         auxiliaries.log(auxiliaries.LogLevel.Debug, 'log level 3');
         expect(fdebug.lastCall.args).to.deep.equal(['log level 3']);

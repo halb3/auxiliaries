@@ -35,11 +35,11 @@ describe('Change Lookup', () => {
         expect(altered.golden).to.be.false;
         altered.alter('golden');
         expect(altered.golden).to.be.true;
-        altered.reset();
+        altered.clear();
         expect(altered.golden).to.be.false;
         altered.alter('data.gamma.min');
         expect(altered.data.gamma.min).to.be.true;
-        altered.reset();
+        altered.clear();
         expect(altered.data.gamma.min).to.be.false;
     });
 
@@ -54,7 +54,7 @@ describe('Change Lookup', () => {
         altered.alter('data.gamma.min');
         expect(altered.data.any).to.be.true;
         expect(altered.data.gamma.any).to.be.true;
-        altered.reset();
+        altered.clear();
         expect(altered.any).to.be.false;
         expect(altered.data.any).to.be.false;
         expect(altered.data.gamma.any).to.be.false;

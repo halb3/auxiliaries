@@ -75,13 +75,13 @@ export class ChangeLookup {
     /**
      * Resets all nested alteration states of a given parent property recursively. Children of object type are
      * recursively reset. Every other child is directly set to false (including any).
-     * @param property - Property to reset alteration states of.
+     * @param property - Property to clear alteration states of.
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    protected static reset(property: any): void {
+    protected static clear(property: any): void {
         for (const name of Object.getOwnPropertyNames(property)) {
             if (typeof property[name] === 'object') {
-                ChangeLookup.reset(property[name]);
+                ChangeLookup.clear(property[name]);
                 continue;
             }
             property[name] = false;
@@ -103,8 +103,8 @@ export class ChangeLookup {
     /**
      * Reset all alteration states to false.
      */
-    reset(): void {
-        return ChangeLookup.reset(this);
+    clear(): void {
+        return ChangeLookup.clear(this);
     }
 
 }

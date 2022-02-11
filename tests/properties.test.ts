@@ -241,7 +241,7 @@ describe('Property comparison', () => {
             { foo: { bar: 1.0, baz: '2.0' }, other: [3, 4] },
             { foo: { bar: 1.0, baz: '2.0' }, other: [3, 4] }, altered)).to.be.false;
         expect(altered.any).to.be.false;
-        altered.reset();
+        altered.clear();
 
 
         expect(compare(
@@ -250,7 +250,7 @@ describe('Property comparison', () => {
         expect(altered.any).to.be.true;
         expect(altered.foo.any).to.be.false;
         expect(altered.other).to.be.true;
-        altered.reset();
+        altered.clear();
 
 
         expect(compare(
@@ -261,7 +261,7 @@ describe('Property comparison', () => {
         expect(altered.foo.bar).to.be.true;
         expect(altered.foo.baz).to.be.false;
         expect(altered.other).to.be.false;
-        altered.reset();
+        altered.clear();
 
 
         expect(compare(
@@ -270,7 +270,7 @@ describe('Property comparison', () => {
         expect(altered.any).to.be.true;
         expect(altered.foo.any).to.be.false;
         expect(altered.other).to.be.true;
-        altered.reset();
+        altered.clear();
 
 
         expect(compare(
@@ -279,7 +279,7 @@ describe('Property comparison', () => {
         expect(altered.any).to.be.true;
         expect(altered.foo.any).to.be.false;
         expect(altered.other).to.be.true;
-        altered.reset();
+        altered.clear();
 
 
         expect(compare(
@@ -288,20 +288,20 @@ describe('Property comparison', () => {
         expect(altered.any).to.be.true;
         expect(altered.foo.any).to.be.true;
         expect(altered.other).to.be.false;
-        altered.reset();
+        altered.clear();
 
 
         expect(compare(undefined, { foo: { bar: 1.0 } }, altered)).to.be.true;
         expect(altered.any).to.be.true;
         expect(altered.foo.any).to.be.true;
         expect(altered.other).to.be.true;
-        altered.reset();
+        altered.clear();
 
         expect(compare(1.0, { foo: { bar: 1.0 } }, altered)).to.be.true;
         expect(altered.any).to.be.true;
         expect(altered.foo.any).to.be.true;
         expect(altered.other).to.be.true;
-        altered.reset();
+        altered.clear();
 
     });
 
