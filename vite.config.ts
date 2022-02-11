@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
             outDir,
             lib: {
                 entry: resolve(root, 'index.ts'),
-                name: 'haeley-auxiliaries',
+                name: 'haeley.auxiliaries',
                 formats: ['cjs', 'umd', 'es'],
                 // fileName: (format: ModuleFormat): string => format === 'umd' ? 'index.js' : `haeley-auxiliaries.${format}.js`
             },
