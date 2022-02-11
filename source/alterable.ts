@@ -41,6 +41,6 @@ export interface Alterable {
      * @param clear - If true, all tracked alterations are reset (to false).
      * @returns - Whether or not any internal property was altered.
      */
-    altered(clear: boolean): boolean;
+    altered(clear?: boolean): boolean;
 
 }
