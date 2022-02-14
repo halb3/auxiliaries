@@ -1,3 +1,9 @@
+
+/* spellchecker: disable */
+
+/* spellchecker: enable */
+
+
 /**
  * Simple interface for objects that can be serialized and deserialized.
  * Intended use:

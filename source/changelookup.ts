@@ -17,8 +17,11 @@ import { assert } from './auxiliaries';
  *     modifier: false };
  *
  * const altered = Object.assign(new ChangeLookup(), alterable);
+ * ...
  * altered.alter('data.beta');
  * if(altered.data.any) { ... }
+ * ...
+ * altered.clear();
  * ```
  */
 export class ChangeLookup {
