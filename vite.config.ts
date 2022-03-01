@@ -1,6 +1,5 @@
 
 import { existsSync } from 'fs';
-
 import { resolve } from 'path';
 import git from 'git-rev-sync';
 
@@ -22,7 +21,6 @@ export default defineConfig(({ mode }) => {
                 entry: resolve(root, 'index.ts'),
                 name: 'haeley.auxiliaries',
                 formats: ['cjs', 'umd', 'es'],
-                // fileName: (format: ModuleFormat): string => format === 'umd' ? 'index.js' : `haeley-auxiliaries.${format}.js`
             },
             sourcemap: 'hidden',
             // rollupOptions: {
@@ -45,16 +43,6 @@ export default defineConfig(({ mode }) => {
         // plugins: [visualizer()]
     };
 
-    // switch (command) {
-
-    //     case 'serve':
-    //         break;
-
-    //     case 'build':
-    //     default:
-    //         break;
-    // }
-
     switch (mode) {
 
         case 'development':
@@ -69,6 +57,6 @@ export default defineConfig(({ mode }) => {
             break;
     }
 
-    console.log(config);
+    // console.log(config);
     return config;
 });
