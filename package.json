@@ -61,6 +61,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "postversion": "git push && git push --tags",
     "prepack": "npm run preversion",
+    "prepare": "npm install && npm run build",
     "preversion": "npm install && npm run build && npm run test"
   },
   "keywords": [
